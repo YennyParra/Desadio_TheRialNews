@@ -1,4 +1,4 @@
 class Newcomment < ApplicationRecord
-  belongs_to :pcuser
+  belongs_to :pc_user
   belongs_to :report
 end

@@ -1,7 +1,8 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[ show edit update destroy ]
   before_action :authenticate_pc_user!, except: %i[ index show]
-  
+  before_action only: %i[new create destroy edit] do
+  authorize_request(["admin"])  
   end
   # GET /reports or /reports.json
   def index
@@ -10,6 +11,8 @@ class ReportsController < ApplicationController
 
   # GET /reports/1 or /reports/1.json
   def show
+    @report = Report.find(params[:id])
+    authorize! :read, @report
   end
 
   # GET /reports/new
@@ -69,4 +72,4 @@ class ReportsController < ApplicationController
     def report_params
       params.require(:report).permit(:title, :description, :pcuser_id)
     end
-  
+  end  

@@ -1,10 +1,11 @@
 class NewcommentsController < ApplicationController
   before_action :set_newcomment, only: %i[ show edit update destroy ]
+  before_action :set_report
 
   # GET /newcomments or /newcomments.json
   def index
-    @newcomments = Newcomment.all
-  end
+    @newcomments = @report.newcomments
+    end
 
   # GET /newcomments/1 or /newcomments/1.json
   def show
@@ -12,7 +13,7 @@ class NewcommentsController < ApplicationController
 
   # GET /newcomments/new
   def new
-    @newcomment = Newcomment.new
+    @newcomment = @report.newcomments.new
   end
 
   # GET /newcomments/1/edit
@@ -21,11 +22,12 @@ class NewcommentsController < ApplicationController
 
   # POST /newcomments or /newcomments.json
   def create
-    @newcomment = Newcomment.new(newcomment_params)
+    @newcomment = @report.newcomments.new(newcomment_params)
+    @newcomment.user = current_pc_user
 
     respond_to do |format|
       if @newcomment.save
-        format.html { redirect_to newcomment_url(@newcomment), notice: "Newcomment was successfully created." }
+        format.html { redirect_to report_newcomment_path(@report.id,@newcomment.id), notice: "Newcomment was successfully created." }
         format.json { render :show, status: :created, location: @newcomment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +67,9 @@ class NewcommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def newcomment_params
-      params.require(:newcomment).permit(:body, :pcuser_id, :report_id)
+      params.require(:newcomment).permit(:body, :pc_user_id, :report_id)
     end
+    def set_report
+      @report =Report.find(params[:report_id])
+  end
 end

@@ -6,8 +6,6 @@
   <% if up_user_signed_in? %>
     <% if current_pc_user.role == "admin" %>
   <%= link_to "Edit this report", edit_report_path(@report) %> |
-  
-
   <%= button_to "Destroy this report", @report, method: :delete %>
   <% end %>
   <% end %>

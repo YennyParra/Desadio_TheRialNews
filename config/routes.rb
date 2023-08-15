@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
+  resources :reports 
   resources :newcomments
-  resources :reports
-  devise_for :pc_users
+
+  devise_for :pc_users, controllers: {
+    sessions: 'pc_users/sessions',
+    registrations: 'pc_users/registrations'
+  }
+  get 'home/index'
+
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-   get 'home/index'
+ 
   # Defines the root path route ("/")
-   root "home#index"
+   root "reports#index"
 end
