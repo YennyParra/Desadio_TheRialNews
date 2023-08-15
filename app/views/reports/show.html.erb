@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @report %>
+
+<div>
+  <% if up_user_signed_in? %>
+    <% if current_pc_user.role == "admin" %>
+  <%= link_to "Edit this report", edit_report_path(@report) %> |
+  
+
+  <%= button_to "Destroy this report", @report, method: :delete %>
+  <% end %>
+  <% end %>
+  <%= link_to "Back to reports", reports_path %> | <%= link_to "New Comment", new_report_comment_path(@report.id)%>
+
+</div>

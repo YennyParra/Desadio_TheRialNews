@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @newcomment %>
+
+<div>
+  <%= link_to "Edit this newcomment", edit_report_newcomment_path(@report.id, @newcomment.id) %> |
+  <%= link_to "Back to newcomments", report_newcomments_path(@report.id) %>
+
+  <%= button_to "Destroy this newcomment", report_newcomment_path(@report.id, @newcomment.id), method: :delete %>
+</div>
