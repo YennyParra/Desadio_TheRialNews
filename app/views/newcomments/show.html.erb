@@ -3,8 +3,10 @@
 <%= render @newcomment %>
 
 <div>
-  <%= link_to "Edit this newcomment", edit_report_newcomment_path(@report.id, @newcomment.id) %> |
-  <%= link_to "Back to newcomments", report_newcomments_path(@report.id) %>
-
+<%= link_to "Back to newcomments", report_newcomments_path(@report.id) %>
+<% if @newcomment.user_id == current_user.id || current_pc_user.role == "admin"%>
+<%= link_to "Edit this newcomment", edit_report_newcomment_path(@report.id, @newcomment.id) %> |
+  
   <%= button_to "Destroy this newcomment", report_newcomment_path(@report.id, @newcomment.id), method: :delete %>
+<%end %>
 </div>

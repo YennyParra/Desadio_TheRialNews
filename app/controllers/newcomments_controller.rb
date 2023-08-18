@@ -1,6 +1,15 @@
 class NewcommentsController < ApplicationController
   before_action :set_newcomment, only: %i[ show edit update destroy ]
   before_action :set_report
+  before_action :authenticate_pc_user!, except: %i[index show]
+  before_action :newcomment_permission, only: %i[ edit destroy]
+  before_action only: [:create, :new ] do
+    authorize_request(["normal_pc_user"])
+  end
+
+  before_action only: [:edit, :update, :destroy] do
+    authorize_request(["admin"])
+  end
 
   # GET /newcomments or /newcomments.json
   def index
@@ -71,5 +80,10 @@ class NewcommentsController < ApplicationController
     end
     def set_report
       @report =Report.find(params[:report_id])
+  end
+  def newcomment_permission
+    unless @newcomment.pc_user_id == current_pc_user.id || current_pc_user.role !=2
+      redirect_to report_newcomment_path(@report.id), notice: 'You are not allowed to perform this action'
+    end    
   end
 end

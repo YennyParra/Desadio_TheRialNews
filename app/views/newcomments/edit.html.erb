@@ -5,6 +5,6 @@
 <br>
 
 <div>
-  <%= link_to "Show this newcomment", @newcomment %> |
-  <%= link_to "Back to newcomments", newcomments_path %>
+  <%= link_to "Show this newcomment", report_newcomment_path(resport.id,@newcomment.id) %> |
+  <%= link_to "Back to newcomments", report_newcomment_path(@report.id) %>
 </div>

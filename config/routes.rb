@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :reports 
-  resources :newcomments
-
+  resources :reports do
+   resources :newcomments, only: [:new, :create]
+  end
   devise_for :pc_users, controllers: {
     sessions: 'pc_users/sessions',
     registrations: 'pc_users/registrations'
